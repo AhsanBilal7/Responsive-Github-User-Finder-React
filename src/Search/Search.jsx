@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import ahsan from "../ahsan.jpg";
 import "./Search.css";
 import ReactDOM from "react-dom";
@@ -14,38 +14,49 @@ function Search() {
     setclick(false);
     setname(event.target.value);
   };
-  const press = () => {
+  const press = e => {
+    e.preventDefault();
     setclick(true);
   };
+  
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setclick(true);
+      console.log("enter key pressed")
+  }
+};
   return (
           <div className="searchmain">
     <>
       <userName.Provider value={name}>
         <userClick.Provider value={click}>
           {/* <div>Search</div> */}
-            <h1 className="title">User Finder By Ahsan Bilal</h1>
+            {/* <h1 className="title">User Finder By Ahsan Bilal</h1>
             <div className="ahsan">
               <img src={ahsan} alt="" />
-            </div>
+            </div> */}
             <div className="mainn">
               <p className="userName">Enter the UserName</p>
               <div className="userDetail">
                 <input
                   placeholder="Enter the Name"
                   onChange={change}
+                  onKeyPress={handleKeypress}
                   type="text"
                   name="username"
                 />
-                <button onClick={press} className="Button">
+                {/* <button onClick={press} className="Button">
                   
                   Search
-                </button>
+                </button> */}
               </div>
               <div className="display">
                 {click ? (
                   <Display value={name} />
                 ) : (
-                  <p>Please Click on Button</p>
+                  <p>Press Enter to Continue</p>
                 )}
               </div>
           </div>
